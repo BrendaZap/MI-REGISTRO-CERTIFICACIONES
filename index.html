@@ -1,0 +1,394 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Registro de Certificaciones</title>
+<style>
+:root {
+  --navy: #123456;
+  --blue: #246AA5;
+  --light-blue: #EAF3FB;
+  --orange: #E9823B;
+  --white: #FFFFFF;
+  --ink: #18324B;
+  --muted: #66788A;
+  --line: #DCE6EF;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: #F4F7FB;
+  color: var(--ink);
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+header {
+  background: var(--navy);
+  color: white;
+  padding: 28px 5%;
+  border-bottom: 5px solid var(--orange);
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  max-width: 1200px;
+  margin: auto;
+}
+.logo {
+  background: white;
+  color: var(--blue);
+  border-radius: 12px;
+  width: 58px;
+  height: 58px;
+  display: grid;
+  place-items: center;
+  font-size: 23px;
+  font-weight: 900;
+}
+h1 { margin: 3px 0; font-size: clamp(23px, 4vw, 32px); }
+header p { margin: 5px 0 0; color: #D4E3F1; }
+main { max-width: 1200px; margin: 28px auto; padding: 0 20px; }
+.notice {
+  background: #FFF8F2;
+  border-left: 4px solid var(--orange);
+  padding: 13px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  line-height: 1.5;
+  margin-bottom: 25px;
+}
+h2 { color: var(--navy); margin-bottom: 7px; }
+.sub { color: var(--muted); font-size: 13px; margin-bottom: 17px; }
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-bottom: 30px;
+}
+.stat {
+  background: white;
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  box-shadow: 0 5px 20px #1234560D;
+}
+.stat-label { color: var(--muted); font-size: 13px; }
+.stat-number { font-size: 32px; font-weight: 800; color: var(--navy); margin-top: 8px; }
+.toolbar {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr auto;
+  gap: 12px;
+  padding: 16px;
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  margin-bottom: 15px;
+}
+label { display: block; color: var(--muted); font-size: 12px; font-weight: 700; margin-bottom: 6px; }
+input, select, button {
+  font: inherit;
+  border-radius: 9px;
+  padding: 11px;
+}
+input, select {
+  width: 100%;
+  border: 1px solid #CAD8E5;
+  background: white;
+  color: var(--ink);
+}
+button { border: 0; cursor: pointer; font-weight: 700; }
+.primary { background: var(--blue); color: white; }
+.secondary { background: var(--light-blue); color: var(--navy); }
+button:hover { filter: brightness(.96); }
+.table-wrap {
+  overflow-x: auto;
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+}
+table { width: 100%; border-collapse: collapse; min-width: 760px; }
+thead { background: var(--light-blue); }
+th {
+  text-align: left;
+  padding: 14px;
+  font-size: 11px;
+  color: #365873;
+  text-transform: uppercase;
+}
+td { padding: 15px 14px; border-top: 1px solid #EDF1F5; font-size: 13px; }
+tbody tr:hover { background: #F8FBFE; }
+.employee { font-weight: 750; color: var(--navy); }
+.small { display: block; font-size: 11px; color: var(--muted); margin-top: 4px; }
+.badge {
+  display: inline-block;
+  padding: 6px 9px;
+  border-radius: 30px;
+  font-size: 11px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+.valid { background: #E4F5EE; color: #187451; }
+.soon { background: #FFF0E4; color: #B85E1D; }
+.expired { background: #FBE9E9; color: #AE3D3D; }
+.unknown { background: #EEF1F5; color: #5D6C7C; }
+.bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  color: var(--muted);
+  font-size: 12px;
+  margin-top: 14px;
+}
+footer { text-align: center; color: var(--muted); font-size: 12px; padding: 30px 15px; }
+@media(max-width: 800px) {
+  .stats { grid-template-columns: repeat(2, 1fr); }
+  .toolbar { grid-template-columns: 1fr 1fr; }
+  .search { grid-column: 1 / -1; }
+}
+@media(max-width: 480px) {
+  .stats { gap: 9px; }
+  .stat { padding: 13px; }
+  .stat-number { font-size: 27px; }
+  .toolbar { grid-template-columns: 1fr; }
+  .search { grid-column: auto; }
+  .brand { align-items: flex-start; }
+  .logo { width: 48px; height: 48px; flex-shrink: 0; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <!-- Espacio provisional para el logo -->
+    <div class="logo">TC</div>
+    <div>
+      <div style="font-size:11px;letter-spacing:2px;color:#BCD4EA">
+        PANEL DE SEGUIMIENTO
+      </div>
+      <h1>Registro de certificaciones</h1>
+      <p>Control de capacitación, vigencias y renovaciones</p>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="notice">
+    <strong>Modo de demostración:</strong>
+    todos los empleados y registros de esta página son ficticios.
+    Esta página es pública. No ingreses datos personales o confidenciales.
+    Los cambios no se guardan al recargar.
+  </div>
+
+  <h2>Resumen general</h2>
+  <p class="sub">Estado calculado automáticamente según la fecha de vencimiento.</p>
+
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-label">Empleados</div>
+      <div class="stat-number" id="employees">0</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Vigentes</div>
+      <div class="stat-number" id="valid">0</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Por vencer</div>
+      <div class="stat-number" id="soon">0</div>
+      <div class="stat-label">En los próximos 30 días</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Vencidas</div>
+      <div class="stat-number" id="expired">0</div>
+    </div>
+  </div>
+
+  <h2>Certificaciones registradas</h2>
+  <p class="sub">Busca empleados, filtra por estado y descarga los resultados.</p>
+
+  <div class="toolbar">
+    <div class="search">
+      <label for="search">Buscar empleado o certificación</label>
+      <input id="search" type="search" placeholder="Escribe un nombre o curso">
+    </div>
+    <div>
+      <label for="status">Estado</label>
+      <select id="status">
+        <option value="all">Todos</option>
+        <option value="valid">Vigentes</option>
+        <option value="soon">Por vencer</option>
+        <option value="expired">Vencidas</option>
+        <option value="unknown">Sin vencimiento</option>
+      </select>
+    </div>
+    <div>
+      <label for="department">Área</label>
+      <select id="department">
+        <option value="all">Todas las áreas</option>
+      </select>
+    </div>
+    <button class="secondary" id="reset">Limpiar</button>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Empleado</th>
+          <th>Área</th>
+          <th>Certificación</th>
+          <th>Emisión</th>
+          <th>Vencimiento</th>
+          <th>Estado</th>
+        </tr>
+      </thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+
+  <div class="bottom">
+    <span id="count">Mostrando 0 registros</span>
+    <button class="primary" id="download">Descargar CSV</button>
+  </div>
+</main>
+
+<footer>
+  Registro de certificaciones · Proyecto de demostración · Datos ficticios
+</footer>
+
+<script>
+const today = new Date();
+today.setHours(0, 0, 0, 0);
+
+function dateOffset(days) {
+  const d = new Date(today);
+  d.setDate(d.getDate() + days);
+  return d.toISOString().slice(0, 10);
+}
+
+// Todos los datos de esta lista son inventados.
+const records = [
+  {name:"Alex Rivera", id:"DEMO-001", area:"Operaciones", course:"Primeros auxilios", issue:dateOffset(-180), expiry:dateOffset(210)},
+  {name:"Sam Torres", id:"DEMO-002", area:"Seguridad", course:"Seguridad industrial", issue:dateOffset(-330), expiry:dateOffset(18)},
+  {name:"Jordan Cruz", id:"DEMO-003", area:"Mantenimiento", course:"Trabajo en alturas", issue:dateOffset(-410), expiry:dateOffset(-35)},
+  {name:"Taylor Luna", id:"DEMO-004", area:"Operaciones", course:"Manejo de materiales", issue:dateOffset(-90), expiry:dateOffset(275)},
+  {name:"Casey Flores", id:"DEMO-005", area:"Seguridad", course:"Respuesta a emergencias", issue:dateOffset(-345), expiry:dateOffset(7)},
+  {name:"Riley Vega", id:"DEMO-006", area:"Mantenimiento", course:"Bloqueo y etiquetado", issue:dateOffset(-500), expiry:dateOffset(-12)},
+  {name:"Morgan Díaz", id:"DEMO-007", area:"Calidad", course:"Gestión de calidad", issue:dateOffset(-60), expiry:dateOffset(305)},
+  {name:"Avery Reyes", id:"DEMO-008", area:"Operaciones", course:"Equipo de protección", issue:dateOffset(-355), expiry:dateOffset(25)},
+  {name:"Jamie Soto", id:"DEMO-009", area:"Calidad", course:"Auditoría interna", issue:dateOffset(-250), expiry:dateOffset(-80)},
+  {name:"Drew Castillo", id:"DEMO-010", area:"Seguridad", course:"Evacuación y brigadas", issue:dateOffset(-120), expiry:dateOffset(240)},
+  {name:"Quinn Morales", id:"DEMO-011", area:"Mantenimiento", course:"Seguridad eléctrica", issue:dateOffset(-340), expiry:dateOffset(12)},
+  {name:"Robin Herrera", id:"DEMO-012", area:"Calidad", course:"Documentación de calidad", issue:dateOffset(-75), expiry:""}
+];
+
+function getStatus(record) {
+  if (!record.expiry) return {key:"unknown", label:"Sin vencimiento", css:"unknown"};
+  const expiryDate = new Date(record.expiry + "T00:00:00");
+  const days = Math.ceil((expiryDate - today) / 86400000);
+  if (days < 0) return {key:"expired", label:"Vencida", css:"expired"};
+  if (days <= 30) return {key:"soon", label:"Por vencer", css:"soon"};
+  return {key:"valid", label:"Vigente", css:"valid"};
+}
+
+function formatDate(value) {
+  if (!value) return "—";
+  return new Intl.DateTimeFormat("es-MX", {
+    day:"2-digit", month:"short", year:"numeric"
+  }).format(new Date(value + "T00:00:00"));
+}
+
+function safe(value) {
+  return String(value).replace(/[&<>"']/g, char => ({
+    "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;"
+  })[char]);
+}
+
+const search = document.getElementById("search");
+const statusSelect = document.getElementById("status");
+const departmentSelect = document.getElementById("department");
+const rows = document.getElementById("rows");
+
+[...new Set(records.map(r => r.area))].sort().forEach(area => {
+  const option = document.createElement("option");
+  option.value = area;
+  option.textContent = area;
+  departmentSelect.appendChild(option);
+});
+
+let visibleRecords = records;
+
+function render() {
+  const q = search.value.trim().toLocaleLowerCase("es-MX");
+  visibleRecords = records.filter(r => {
+    const s = getStatus(r);
+    const text = `${r.name} ${r.id} ${r.area} ${r.course}`.toLocaleLowerCase("es-MX");
+    return text.includes(q) &&
+      (statusSelect.value === "all" || s.key === statusSelect.value) &&
+      (departmentSelect.value === "all" || r.area === departmentSelect.value);
+  });
+
+  rows.replaceChildren();
+
+  if (!visibleRecords.length) {
+    const tr = document.createElement("tr");
+    tr.innerHTML = '<td colspan="6" style="text-align:center;padding:32px;color:#66788A">No hay registros que coincidan con la búsqueda.</td>';
+    rows.appendChild(tr);
+  } else {
+    visibleRecords.forEach(r => {
+      const s = getStatus(r);
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td><span class="employee">${safe(r.name)}</span><span class="small">${safe(r.id)}</span></td>
+        <td>${safe(r.area)}</td>
+        <td><strong>${safe(r.course)}</strong></td>
+        <td>${formatDate(r.issue)}</td>
+        <td>${formatDate(r.expiry)}</td>
+        <td><span class="badge ${s.css}">${s.label}</span></td>`;
+      rows.appendChild(tr);
+    });
+  }
+
+  document.getElementById("employees").textContent = new Set(records.map(r => r.name)).size;
+  document.getElementById("valid").textContent = records.filter(r => getStatus(r).key === "valid").length;
+  document.getElementById("soon").textContent = records.filter(r => getStatus(r).key === "soon").length;
+  document.getElementById("expired").textContent = records.filter(r => getStatus(r).key === "expired").length;
+  document.getElementById("count").textContent =
+    `Mostrando ${visibleRecords.length} de ${records.length} certificaciones`;
+}
+
+search.addEventListener("input", render);
+statusSelect.addEventListener("change", render);
+departmentSelect.addEventListener("change", render);
+
+document.getElementById("reset").addEventListener("click", () => {
+  search.value = "";
+  statusSelect.value = "all";
+  departmentSelect.value = "all";
+  render();
+});
+
+document.getElementById("download").addEventListener("click", () => {
+  const header = ["Empleado","ID de prueba","Área","Certificación","Emisión","Vencimiento","Estado"];
+  const data = visibleRecords.map(r => [
+    r.name, r.id, r.area, r.course, r.issue, r.expiry, getStatus(r).label
+  ]);
+  const quote = value => '"' + String(value ?? "").replace(/"/g, '""') + '"';
+  const csv = "\uFEFF" + [header, ...data].map(row => row.map(quote).join(",")).join("\r\n");
+  const blob = new Blob([csv], {type:"text/csv;charset=utf-8;"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "certificaciones-demo.csv";
+  a.click();
+  URL.revokeObjectURL(url);
+});
+
+render();
+</script>
+</body>
+</html>
